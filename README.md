@@ -7,9 +7,9 @@ objectif est de faire la prévision  de la consommation d'életricité Français
 (https://public.opendatasoft.com/explore/dataset/donnees-synop-essentielles-omm/table/?sort=date)
 - préprocessing en python:
 - concatenation de 13 fichiers csv (1 par région + nationale) et ajout de la colonne region sur le df_conso. Retrait de données collectées pendant  15 et 45 minutes 
-- agregation de la temp  moyenne par  region et datetime de la température(kelvin), interpolation linéaire pour completer les dateyime mmanquantes : car les données météo sont collectées chaque 3 heure
+- agregation de la température  moyenne (kelvin) par  region et datetime, interpolation linéaire pour compléter les datetimes mmanquantes.Car les données météo sont collectées chaque 3 heures
 - merge  de df_conso et df_meteo
-- ajout de colonne calendrier:weekday,isHoliday France,hour,isweekEnd,year,month
-- previosn avec le modele prophet de chaqque série (13)
+- ajout de colonnes calendriers:weekday,isHoliday France,hour,isweekEnd,year,month
+- prévision en utlisant le modèle prophet de chaqque série (13: 12 régions et 1 natinale)
 - réconciliation des prévisions avec la librairie sklearn-hts
-- methode d'experts des prévisions nationales en R
+- methode d'agrégation de poids des experts(randomforest,auto-arima, prophet,tslm) avec la librairie "opera" en R 
