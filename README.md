@@ -1,6 +1,6 @@
 ### forecasting_consommation_electrique
 
-objectif est de faire la prévision  de la consommation d'életricité Française(Nationale et régionales) du 31  décembre 2022 avec de données de résolution de 30mn
+objectif est de faire la prévision  de la consommation d'életricité Française(Nationale et régionales) du 31 décembre 2022 avec de données de résolution de 30mn
 
 - recupération de données  de consommation d'électricité(df_conso) sur le site RTE (01/01/2021 au 31/12/2022)
 - récupération de données météo sur le site météo France(df_meteo)  (https://public.opendatasoft.com/explore/dataset/donnees-synop-essentielles-omm/table/?sort=date)
