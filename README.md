@@ -14,7 +14,7 @@ objectif est de faire la prévision  de la consommation d'életricité Français
 - réconciliation ou rapprochement(revisions) des prévisions avec la librairie sklearn-hts
 - methode d'agrégation de poids des experts(randomforest,auto-arima, prophet,tslm) avec la librairie "opera" en R 
 
-commentaire model prophet vs  methodes reconciliations:
-l'utilisation de la méthode de réconciliation a permis d'améliorer les prévisions de chaque série car leur RMSE(erreur moyenne quadratique) est inférieure avant la réconciliation (voir  le notebook "forecast_methode_reconciliation")
+commentaire résultat, model prophet vs  methodes reconciliations:
+l'utilisation de la méthode de réconciliation a permis d'améliorer les prévisions de chaque série car leur RMSE(erreur moyenne quadratique) est inférieure avant la réconciliation (voir  "RMSE_prophet_and_reconciliation.png" ou le notebook "forecast_methode_reconciliation")
 
-commentaire méthode d'agregations (experts):(voir  le le code R "forecast_methode_experts")
+commentaire résultat, méthode d'agregations (experts):(voir  le le code R "forecast_methode_experts")
