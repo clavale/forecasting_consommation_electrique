@@ -1,10 +1,10 @@
-### forecasting_consommation_electrique
+### forecasting consommation d'électricité Française du 31/12/2022
 
 
-Ce projet  a été réalisé dans le cadre du cours de série témporelle  de notre formation  Master 2 en Machine learning for IA à l'université Lumière Lyon 2
+### Ce projet  a été réalisé dans le cadre du cours de série témporelle  de notre formation  Master 2 en Machine learning for IA à l'université Lumière Lyon 2
 
 
-L'objectif est de faire la prévision  de la consommation d'életricité Française (Nationale et régionales) du 31 décembre 2022 avec de données de résolution de 30mn
+###L'objectif est de faire la prévision  de la consommation d'életricité Française (Nationale et régionales) du 31 décembre 2022 avec de données de résolution de 30mn
 
 Démarches et résultats (voir "Workflow_precessing_prevision.jpg"):
 
