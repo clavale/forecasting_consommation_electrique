@@ -1,12 +1,12 @@
-### forecasting consommation d'électricité Française du 31/12/2022
+### Prévision de la consommation d'électricité Française du 31/12/2022
 
 
 ### Ce projet  a été réalisé dans le cadre du cours de série témporelle  de notre formation  Master 2 en Machine learning for IA à l'université Lumière Lyon 2
 
 
-###L'objectif est de faire la prévision  de la consommation d'életricité Française (Nationale et régionales) du 31 décembre 2022 avec de données de résolution de 30mn
+### L'objectif est de faire la prévision  de la consommation d'életricité Française (Nationale et régionales) du 31 décembre 2022 avec de données de résolution de 30mn
 
-Démarches et résultats (voir "Workflow_precessing_prevision.jpg"):
+### Démarches et résultats (voir "Workflow_precessing_prevision.jpg"):
 
 - récupération de données  de consommation d'électricité(df_conso) sur le site RTE (01/01/2021 au 31/12/2022)
 - récupération de données météo sur le site météo France(df_meteo) (01/01/2021 au 31/12/2022)
