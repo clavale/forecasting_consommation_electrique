@@ -1,0 +1,226 @@
+---
+title: "Prévision de la consommation d'électricité nationale Française du 31 décembre 2022 avec la méthode d'agregation des poids des experts"
+
+author: "Morel Mbedi and Adjoua HOUNDONOUGBO"
+date: "2023-02-17"
+output:
+  html_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = 'C:/Users/morel/Documents/M2_MALIA/forcasting/projet_forecasting/data_finale')
+```
+
+
+
+```{r}
+#chargement des librairies
+library(randomForest)
+library(gbm)
+library(mgcv)
+library(party)
+library(electBook) 
+library(forecast)
+```
+
+
+```{r}
+#chargment de données
+df<-read.csv("df_ajout_var_calendar.csv",header=T,stringsAsFactors = T)
+df<-df
+#View(head(df))
+str(df)
+df$DateHeure<-as.Date(df$DateHeure,format = "%Y-%m-%d %H:%M:%S")
+```
+
+```{r}
+#5 premières lignes
+head(df)
+```
+
+```{r}
+#info sur les colonnes
+str(df)
+```
+
+```{r}
+str(df)
+df$DateHeure<-as.Date(df$DateHeure,format = "%Y-%m-%d %H:%M:%S")
+#df[['DateHeure']] <- as.POSIXct(df[['DateHeure']],format = "%Y-%m-%d %H:%M:%S")
+df=subset(df ,region=="France")
+df$Weekend<-as.logical(df$Weekend)
+df$Weekend <- as.integer(df$Weekend)
+df$isHolyday<-as.logical(df$isHolyday)
+df$isHolyday <- as.integer(df$isHolyday)
+col=c("DateHeure","conso","temp","heure","period_journey","isHolyday"         
+,"weekday","Weekend","Mois")
+#selection des variable
+df_france=df[col]
+```
+
+
+```{r}
+#praparation des données
+last <- tail(seq(nrow(df_france)), 48)
+df_france$conso48 <- c(rep(NA, 48), df_france$conso[-last])
+#separataion data
+n_test <- 48
+n_train<-nrow(df_france)-n_test
+df_train <- head(df_france,n_train)
+df_test <- tail(df_france,48)
+```
+
+
+```{r}
+#visualisation
+plot(df_france$DateHeure, 
+     df_france$conso, type = 'n')
+lines(df_train$DateHeure, df_train$conso)
+lines(df_test$DateHeure, df_test$conso, col = 2)
+
+```
+
+```{r}
+#Random Forest
+formula_ML <- conso ~ temp + heure + period_journey + isHolyday + 
+  weekday + Weekend + Mois
+expert_rf <- randomForest(formula_ML, data = na.omit(df_train))
+expert_rf_forecast <- predict(expert_rf, newdata=df_test)
+mean(expert_rf_forecast)
+print(sqrt(mean((expert_rf_forecast-df_test[,"conso"])**2)))
+```
+
+```{r}
+print(sqrt(mean((expert_rf_forecast-df_test[,"conso"])**2)))
+```
+
+```{r}
+#auto-arima sans covariables
+ts.train <- ts(df_train, frequency = 7)
+ts.test <- ts(ts.train, frequency = 7)
+fit1=auto.arima(df_train[,"conso"])
+forecast_auto_arima1=forecast(fit1,h=48)
+forecast_auto_arima1 <- forecast_auto_arima1$mean
+```
+
+```{r}
+forecast_auto_arima1
+```
+
+
+```{r}
+print(sqrt(mean((forecast_auto_arima1-df_test[,"conso"])**2)))
+```
+
+
+```{r}
+#auto-arima avec covariable
+
+#### objet ts ###################
+
+date_start=as.Date("2021-01-01")
+date_end=as.Date("2022-12-31")
+
+#ts.data <- ts(data = data, start =date_start, end =date_end,frequency=48)
+ts.train <- ts(df_train, frequency = 7)
+ts.test <- ts(df_test, frequency = 7)
+fit2=auto.arima(df_train[,"conso"],xreg=as.matrix(df_train[,3:9]))
+forecast_auto_arima2<-forecast(fit2,h=48,xreg=as.matrix(df_test[,3:9]))
+forecast_auto_arima2 <- forecast_auto_arima2$mean
+```
+
+```{r}
+print(sqrt(mean((forecast_auto_arima2-df_test[,"conso"])**2)))
+```
+
+```{r}
+library(prophet)
+
+# charger les donnée
+
+# préparer les données pour Prophet
+df_prophet=df_france
+df_prophet$ds <-df_prophet$DateHeure
+df_prophet$y <- df_prophet$conso
+df_prophet$holiday <- ifelse(df_prophet$isHolyday  == "yes", 1, 0)
+
+# inclure les variables exogènes
+str(df_prophet) 
+df_prophet<-df_prophet[,setdiff(colnames(df_prophet),c("DateHeure","conso"))]
+summary(df_prophet)
+# entraîner le modèle
+m <- prophet(df_prophet,yearly.seasonality=TRUE,
+weekly.seasonality = TRUE,holidays = df_prophet[df_prophet$holiday == 1,
+                                                c("ds", "holiday")])
+
+# faire des prévisions
+future <- make_future_dataframe(m, periods = 1)
+forecast_prophet <- predict(m, future)
+# afficher les prévisions
+plot(m, forecast_prophet)
+
+forecast_prophet<-tail(forecast_prophet$yhat,48)
+
+```
+
+```{r}
+######## méthodes tslm  ################
+
+#regardons le le modèle tslm en incluant la saisonnalité 
+
+formula_tslm <- conso ~ temp + heure + period_journey + isHolyday + 
+  weekday + Weekend + Mois
+fit_tslm=tslm(formula_tslm,data=ts.train) 
+
+forecast_tslm<-predict(fit_tslm, newdata =ts.test[,3:9])
+print(sqrt(mean((forecast_tslm-df_test[,"conso"])**2)))
+
+
+```
+
+```{r}
+########## methodes par aggrégations des poids des experts##########
+
+# 2. Mixture  ####
+
+library(opera)
+experts <- cbind(expert_rf_forecast,forecast_auto_arima1,forecast_auto_arima2,
+forecast_tslm,forecast_prophet)
+colnames(experts) <- c("rf","arima_sans_covariable","arima_avec_covariable",
+                       "tslm","prophet")
+or <- oracle(df_test$conso,experts, 
+             model = "convex", 
+             loss.type = "square")
+
+rmse_exp <- apply(experts, 2,
+                  function(x){sqrt(mean((x - df_test$conso)^2))})
+
+rmse_exp %>% round(, digits = 0) %>% sort
+
+```
+
+```{r}
+# valeur théorique
+M <- mean((df_train$conso - df_train$conso48)^2, na.rm = T)
+learning.rate <- (1/M) * sqrt(8*log(ncol(experts))) / nrow(df_test)
+agg.online_theoric<- mixture(Y = df_test$conso, 
+                             experts = experts,
+                             model = 'EWA', 
+                             loss.type = "square",
+                             loss.gradient = F,
+                             parameter=list(eta=learning.rate))
+plot(agg.online_theoric)
+```
+
+```{r}
+summary(agg.online_theoric)
+
+# optimisation sur les données
+agg.online<- mixture(Y = df_test$conso , experts = experts,
+                     model = 'EWA', loss.type = "square",
+                     loss.gradient = F)
+plot(agg.online)
+summary(agg.online)
+```
