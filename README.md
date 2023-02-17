@@ -7,7 +7,7 @@
 
 ### L'objectif est de faire la prévision  de la consommation d'életricité Française (Nationale et régionales) du 31 décembre 2022 avec de données de résolution de 30 mn
 
-### Démarches et résultats (voir "Workflow_preprocessing_prevision.jpg"):
+### Démarches et résultats (voir "Workflow_preprocessing_prévision_conso_electrique_France.pdf"):
 
 - récupération de données  de consommation d'électricité(df_conso) sur le site RTE (01/01/2021 au 31/12/2022)
 https://www.rte-france.com/eco2mix/telecharger-les-indicateurs
