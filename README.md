@@ -23,4 +23,5 @@
 - commentaire résultat, model prophet vs  methode reconciliation:
 l'utilisation de la méthode de réconciliation a permis d'améliorer les prévisions de chaque série car leur RMSE(erreur moyenne quadratique) est inférieure avant la réconciliation (voir  "RMSE_prophet_and_reconciliation.png" ou le notebook "forecast_methode_reconciliation")
 
-- commentaire résultat, méthode d'agregations (experts):(voir  le le code R "forecast_methode_experts")
+- commentaire résultat, méthode d'agregations (experts):(voir  le le code R "forecast_methode_experts"):
+le mdèle tslm contribue plus à la prédiction que les autres experts : prophet, arima,randomforest (voir "methode_experts.html" ou "methode_experts.Rmd")
