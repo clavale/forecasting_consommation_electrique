@@ -1,11 +1,11 @@
 ### Prévision de la consommation d'électricité Française du 31/12/2022
 
-### Auteurs: Adjoua and Morel
+### Auteurs: Adjoua HOUNDONOUGBO and Morel MBEDI
 
-### Ce projet  a été réalisé dans le cadre du cours de série temporelle  de notre formation  Master 2  Machine learning for IA à l'université Lumière Lyon 2
+### Ce projet  a été réalisé dans le cadre du cours de série temporelle  de notre formation "Master 2  Machine learning pour l'Intelligence Artificielle" à l'université Lumière Lyon 2
 
 
-### L'objectif est de faire la prévision  de la consommation d'életricité Française (Nationale et régionales) du 31 décembre 2022 avec de données de résolution de 30 mn
+### L'objectif est de faire la prévision  de la consommation d'életricité Française (Nationale et régionales) du 31 décembre 2022 avec de données de résolution de 30 minutes
 
 ### Démarches et résultats (voir "Workflow_preprocessing_prévision_conso_electrique_France.pdf"):
 
