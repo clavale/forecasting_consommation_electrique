@@ -21,8 +21,8 @@ https://donneespubliques.meteofrance.fr/?fond=produit&id_produit=90&id_rubrique=
 - merge  de df_conso et df_meteo
 - ajout de colonnes calendriers:weekday,isHoliday France,hour,isweekEnd,year,month
 - prévision en utilisant le modèle prophet de chaqque série (13: 12 régions et 1 natinale) en python
-- réconciliation ou rapprochement(révisions) des prévisions avec la librairie "sklearn-hts"
-- methode d'agrégation de poids des experts(randomforest,auto-arima, prophet,tslm) avec la librairie "opera" en R (utilisation du code R vu en TP)
+- prévision hiérarchique(Nationale:régions): réconciliation ou rapprochement(révisions) des prévisions avec la librairie "sklearn-hts"
+- prévision par experts: methode d'agrégation de poids des experts(randomforest,auto-arima, prophet,tslm) avec la librairie "opera" en R (utilisation du code R vu en TP)
 
 - commentaire résultat, model prophet vs  methode reconciliation:
 l'utilisation de la méthode de réconciliation a permis d'améliorer les prévisions de chaque série,car leurs RMSE(erreur moyenne quadratique) sont inférieures après la réconciliation des prévisions obtenues avec la méthode "prophet" (voir  "RMSE_prophet_and_reconciliation.png" ou le notebook "forecast_methode_reconciliation")
