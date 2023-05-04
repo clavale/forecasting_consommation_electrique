@@ -5,9 +5,9 @@
 ### Ce projet  a été réalisé dans le cadre du cours de série temporelle  de notre formation "Master 2  Machine learning pour l'Intelligence Artificielle" à l'université Lumière Lyon 2
 
 
-### L'objectif est de faire la prévision  de la consommation d'électricité Française (Nationale et régionales) du 31 décembre 2022 avec de données de résolution de 30 minutes
+### L'objectif était de prévoir la consommation d'électricité Française (régionale et nationale) du 31 décembre 2022 pour chaque 30 minutes
 
-### Démarches et résultats 5 voir "Workflow_preprocessing_prévision_conso_electrique_France.pdf"):
+### Démarches et résultats  (voir le worflow => "Workflow_preprocessing_prévision_conso_electrique_France.pdf"):
 
 - récupération de données  de consommation d'électricité(df_conso) sur le site RTE (01/01/2021 au 31/12/2022)
 https://www.rte-france.com/eco2mix/telecharger-les-indicateurs
