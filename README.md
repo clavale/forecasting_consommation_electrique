@@ -16,8 +16,8 @@ https://www.rte-france.com/eco2mix/telecharger-les-indicateurs
 https://donneespubliques.meteofrance.fr/?fond=produit&id_produit=90&id_rubrique=32
 
 - préprocessing en python:
-- concatenation de 13 fichiers csv (12 régionS + 1 national). Retrait de données collectées pendant  15 et 45 minutes 
-- ajout de la colonne region pour faire correspondre  chaque site de relevé météo dans sa région;Agrégation de la température  moyenne (kelvin) par  region et datetime, interpolation linéaire pour compléter les temp des  datetimes manquantes rajoutées.Car les données météo sont collectées chaque 3 heures. l'idée c'est de collecter  les températures après chaque 30 mn comme pour les données de consommation d'électricité.
+- df_conso: concatenation de 13 fichiers csv (12 régionS + 1 national). Retrait de données collectées pendant  15 et 45 minutes 
+-df_meteo:  ajout de la colonne region pour faire correspondre  chaque site de relevé météo dans sa région;Agrégation de la température  moyenne (kelvin) par  region et datetime (présence de plusieurs sites de relévé météo dans la région), interpolation linéaire pour compléter les températures  manquantes des datetimes rajoutées.Car les données météo sont collectées chaque 3 heures. l'idée c'est de collecter  les données de températures après chaque 30 mn comme pour les données de consommation d'électricité.
 - merge  de df_conso et df_meteo
 - ajout de colonnes calendriers:weekday,isHoliday France,hour,isweekEnd,year,month
 - prévision en utilisant le modèle prophet de chaque série (12 régions et 1 natinale) en python
